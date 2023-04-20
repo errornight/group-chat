@@ -45,7 +45,7 @@ ROOT_URLCONF = 'ChatMe.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,3 +115,7 @@ MEDIA_ROOT = 'media/'
 # Default primary key field type
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'base.User'
+LOGIN_URL = 'Login'
+LOGOUT_REDIRECT = 'Signup'

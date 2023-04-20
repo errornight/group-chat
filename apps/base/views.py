@@ -1,8 +1,74 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
+from django.contrib.auth.decorators import login_required
+from .forms import SignupForm, LoginForm, EditProfile
+from .models import User
+from django.contrib.auth.forms import PasswordChangeForm
 
 def startup(request):
-    return HttpResponse('This is startup page!')
+    if request.user.is_authenticated:
+        return redirect('Profile')
+    form = SignupForm()
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            login(request, form.instance)
+            return redirect('Profile')
+
+    context = {'form': form}
+    return render(request, 'base/signup.html', context)
 
 
+def login_user(request):
+    if request.user.is_authenticated:
+        return redirect('Profile')
 
+    form = LoginForm()
+    if request.method == 'POST':
+        form = LoginForm(request, data=request.POST)
+        if form.is_valid():
+            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user:
+                login(request, user)
+                return redirect('Profile')
+    
+    context = {'form': form}
+    return render(request, 'base/login.html', context)
+
+def logout_user(request):
+    logout(request)
+    return redirect('Startup')
+
+@login_required
+def profile(request):
+    user = User.objects.get(uuid=request.user.uuid)
+    context = {'user': user}
+    return render(request, 'base/profile.html', context)
+
+
+@login_required()
+def edit_profile(request):
+    user = request.user
+    if request.method == 'POST':
+        form = EditProfile(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('Profile')
+
+
+    return render(request, 'base/edit-profile.html')
+
+@login_required()
+def change_password(request):
+    form = PasswordChangeForm(user=request.user)
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Security:)
+            print('Password changed!')
+            return redirect('Profile')
+
+    context = {'form': form}
+    return render(request, 'base/change-password.html', context)
