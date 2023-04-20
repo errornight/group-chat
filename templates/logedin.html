@@ -14,10 +14,10 @@
     <!-- Navigation bar -->
         <nav class="bg-white border-b-2 border-gray-300">
             <div class="container mx-auto px-4 py-2 flex justify-between items-center">
-              <a class="text-lg font-bold text-gray-800" href="#">Join and chat!</a>
+              <a class="text-lg font-bold text-gray-800" href="{% url 'AllGroups' %}">Join and chat!</a>
               <div class="flex items-center">
                 <a
-                href="{% url 'Profile' %}">
+                href="{% url 'Profile' request.user.uuid %}">
                 <p class="text-gray-800 mr-4">Welcome, <span class="font-bold">{{request.user}}</span>!</p>
                 </a>
                 <a

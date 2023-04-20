@@ -9,7 +9,6 @@ class CustomUserAdmin(admin.ModelAdmin):
 
     @staticmethod
     def time_since(obj):
-        # to calculate how long time ago, the ticket was created.
         now = datetime.now(pytz.utc)
         date = obj.date_joined.replace(tzinfo=pytz.utc)
         elapsed = now - date
