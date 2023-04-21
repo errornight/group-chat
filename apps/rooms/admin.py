@@ -7,6 +7,7 @@ from .models import Group, Message
 class GroupAdmin(admin.ModelAdmin):
     list_display = ['title', 'owner', 'uuid', 'timesince']
     search_fields = ['title', 'description', 'owner.username']
+
     @staticmethod
     def timesince(obj):
         now = datetime.now(pytz.utc)

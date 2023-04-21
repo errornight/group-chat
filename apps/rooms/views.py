@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Group
+
 @login_required
 def all_groups(request):
     q = request.GET.get('q')

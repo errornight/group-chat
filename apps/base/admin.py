@@ -22,4 +22,5 @@ class CustomUserAdmin(admin.ModelAdmin):
         else:
             return f"{minutes} minutes ago"
 
+
 admin.site.register(User, CustomUserAdmin)

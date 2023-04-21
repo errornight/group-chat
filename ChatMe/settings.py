@@ -96,7 +96,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Tehran'
+TIME_ZONE = 'Asia/Tehran'   # Cause I'm there.
 
 USE_I18N = True
 
@@ -105,17 +105,18 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
 STATIC_URL = 'static/'
-STATICFILES_DIRS = ['static']
+
+
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Custom settings.
+AUTH_USER_MODEL = 'base.User'
+
+LOGIN_URL = 'Login'
+LOGOUT_REDIRECT = 'Signup'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = 'media/'
 
-# Default primary key field type
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-AUTH_USER_MODEL = 'base.User'
-LOGIN_URL = 'Login'
-LOGOUT_REDIRECT = 'Signup'
